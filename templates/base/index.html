@@ -1,0 +1,66 @@
+{% extends 'base/base.html' %}
+{% load static %}
+
+{% block title %}DocDrop - Secure Document Management{% endblock %}
+
+{% block content %}
+<!-- Hero Section -->
+<div class="row align-items-center py-5">
+    <div class="col-lg-6">
+        <h1 class="display-4 fw-bold mb-3">Secure Document Sharing for Modern Business</h1>
+        <p class="lead text-secondary mb-4">
+            DocDrop simplifies document management between Owners and Clients.
+            Securely upload, organize, and access files from anywhere.
+        </p>
+        <div class="d-flex gap-3">
+            <a href="{% url 'accounts:admin_login' %}" class="btn btn-primary btn-lg px-4">
+                <i class="bi bi-shield-check me-2"></i>Owner Login
+            </a>
+            <a href="{% url 'accounts:user_login' %}" class="btn btn-outline-primary btn-lg px-4">
+                <i class="bi bi-person me-2"></i>Client Login
+            </a>
+        </div>
+        <div class="mt-4">
+            <small class="text-muted">Want to become an Owner? <a href="{% url 'accounts:register_owner' %}"
+                    class="fw-bold">Register Here</a></small>
+        </div>
+    </div>
+    <div class="col-lg-6 text-center mt-5 mt-lg-0">
+        <div class="card border-0 shadow-lg rounded-4 p-3 bg-light opacity-75">
+            <img src="https://images.unsplash.com/photo-1618044733300-9472054094ee?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80"
+                class="img-fluid rounded-3" alt="Document Management">
+        </div>
+    </div>
+</div>
+
+<!-- Features Section -->
+<div class="row mt-5 pt-5 g-4">
+    <div class="col-md-4">
+        <div class="card h-100 border-0 shadow-sm text-center p-4">
+            <div class="text-primary mb-3">
+                <i class="bi bi-shield-lock" style="font-size: 2.5rem;"></i>
+            </div>
+            <h4>Secure Storage</h4>
+            <p class="text-secondary">Enterprise-grade security for your sensitive documents and client data.</p>
+        </div>
+    </div>
+    <div class="col-md-4">
+        <div class="card h-100 border-0 shadow-sm text-center p-4">
+            <div class="text-primary mb-3">
+                <i class="bi bi-people" style="font-size: 2.5rem;"></i>
+            </div>
+            <h4>Client Management</h4>
+            <p class="text-secondary">Owners can easily manage multiple clients and their documents in one portal.</p>
+        </div>
+    </div>
+    <div class="col-md-4">
+        <div class="card h-100 border-0 shadow-sm text-center p-4">
+            <div class="text-primary mb-3">
+                <i class="bi bi-cloud-arrow-up" style="font-size: 2.5rem;"></i>
+            </div>
+            <h4>Instant Access</h4>
+            <p class="text-secondary">Upload and access files instantly from any device, anywhere in the world.</p>
+        </div>
+    </div>
+</div>
+{% endblock %}

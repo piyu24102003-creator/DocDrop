@@ -25,8 +25,13 @@ SECRET_KEY=$(python -c 'import secrets; print(secrets.token_urlsafe(50))')
 DEBUG=False
 ALLOWED_HOSTS=buhechapriyanshu24.pythonanywhere.com
 DATABASE_URL=mysql://buhechapriyanshu24:YOUR_PASSWORD@buhechapriyanshu24.mysql.pythonanywhere-services.com/buhechapriyanshu24\$default
+# Email Settings
+EMAIL_HOST_USER=your-email@gmail.com
+EMAIL_HOST_PASSWORD=your-app-password
+DEFAULT_FROM_EMAIL=your-email@gmail.com
 EOF
-  echo "!!! Action Required: Edit 'docdrop/.env' with your actual MySQL password !!!"
+  echo "!!! Action Required: Edit 'docdrop/.env' with your actual MySQL password and email settings !!!"
+  echo "!!! (If you don't need email yet, you can leave the email fields as they are) !!!"
 fi
 
 # 3. Static Files and Migrations

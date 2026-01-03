@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Welcome to DocDrop</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            max-width: 600px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        .container {
+            background-color: #f8f9fa;
+            border-radius: 10px;
+            padding: 30px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 30px;
+            border-radius: 10px 10px 0 0;
+            text-align: center;
+            margin: -30px -30px 30px -30px;
+        }
+
+        .header h1 {
+            margin: 0;
+            font-size: 28px;
+        }
+
+        .credentials {
+            background-color: white;
+            border-left: 4px solid #667eea;
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 5px;
+        }
+
+        .credentials p {
+            margin: 10px 0;
+        }
+
+        .credentials strong {
+            color: #667eea;
+        }
+
+        .button {
+            display: inline-block;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 12px 30px;
+            text-decoration: none;
+            border-radius: 5px;
+            margin: 20px 0;
+            font-weight: bold;
+        }
+
+        .footer {
+            margin-top: 30px;
+            padding-top: 20px;
+            border-top: 1px solid #ddd;
+            font-size: 12px;
+            color: #666;
+            text-align: center;
+        }
+
+        .warning {
+            background-color: #fff3cd;
+            border-left: 4px solid #ffc107;
+            padding: 15px;
+            margin: 20px 0;
+            border-radius: 5px;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🎉 Welcome to DocDrop!</h1>
+        </div>
+
+        <p>Hello <strong>{{ user.get_full_name|default:user.username }}</strong>,</p>
+
+        <p>Your account has been created by <strong>{{
+                owner.profile.firm_name|default:owner.get_full_name|default:owner.username }}</strong>. You can now
+            upload and manage your documents securely.</p>
+
+        <div class="credentials">
+            <h3 style="margin-top: 0; color: #667eea;">Your Login Credentials</h3>
+            <p><strong>Username/Email:</strong> {{ user.email }}</p>
+            <p><strong>Temporary Password:</strong> <code
+                    style="background: #f0f0f0; padding: 5px 10px; border-radius: 3px; font-size: 16px;">{{ password }}</code>
+            </p>
+        </div>
+
+        <div class="warning">
+            <strong>⚠️ Important Security Notice:</strong>
+            <p style="margin: 5px 0 0 0;">Please change your password after your first login for security purposes.</p>
+        </div>
+
+        <div style="text-align: center;">
+            <a href="http://{{ login_url }}/accounts/login/" class="button">Login to DocDrop</a>
+        </div>
+
+        <h3>What's Next?</h3>
+        <ul>
+            <li>Login using your credentials above</li>
+            <li>Update your profile information</li>
+            <li>Start uploading documents</li>
+            <li>Respond to document requests</li>
+        </ul>
+
+        <div class="footer">
+            <p>This is an automated email from DocDrop. Please do not reply to this email.</p>
+            <p>If you did not expect this email, please contact <strong>{{ owner.email }}</strong></p>
+            <p>&copy; 2026 DocDrop. All rights reserved.</p>
+        </div>
+    </div>
+</body>
+
+</html>

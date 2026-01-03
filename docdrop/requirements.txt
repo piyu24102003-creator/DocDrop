@@ -4,4 +4,5 @@ Pillow>=10.0.0
 django-environ
 whitenoise
 gunicorn
+cryptography
 

@@ -19,6 +19,7 @@ class Document(models.Model):
     ]
     
     user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='documents')
+    target_owner = models.ForeignKey(User, on_delete=models.SET_NULL, null=True, blank=True, related_name='received_documents')
     document_name = models.CharField(max_length=255)
     document_file = models.FileField(upload_to=document_upload_path)
     document_type = models.CharField(max_length=20, choices=DOCUMENT_TYPE_CHOICES, default='other')
@@ -59,3 +60,27 @@ class Document(models.Model):
                 return f"{size:.2f} {unit}"
             size /= 1024.0
         return f"{size:.2f} TB"
+
+
+class DocumentRequest(models.Model):
+    """Model for owners to request documents from clients"""
+    STATUS_CHOICES = [
+        ('pending', 'Pending'),
+        ('completed', 'Completed'),
+        ('cancelled', 'Cancelled'),
+    ]
+    
+    owner = models.ForeignKey(User, on_delete=models.CASCADE, related_name='sent_requests')
+    client = models.ForeignKey(User, on_delete=models.CASCADE, related_name='received_requests')
+    title = models.CharField(max_length=200)
+    description = models.TextField(blank=True, null=True)
+    status = models.CharField(max_length=20, choices=STATUS_CHOICES, default='pending')
+    document = models.ForeignKey(Document, on_delete=models.SET_NULL, null=True, blank=True, related_name='request')
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+
+    class Meta:
+        ordering = ['-created_at']
+
+    def __str__(self):
+        return f"{self.title} from {self.owner.username} to {self.client.username}"

@@ -4,7 +4,8 @@ from django.contrib import messages
 from django.http import FileResponse, Http404
 from django.conf import settings
 import os
-from .models import Document
+from django.contrib.auth.models import User
+from .models import Document, DocumentRequest
 from accounts.views import is_admin
 
 
@@ -36,31 +37,63 @@ def upload_document(request):
         if not document_name:
             document_name = document_file.name
         
+        target_owner_id = request.POST.get('target_owner')
+        target_owner = None
+        if target_owner_id:
+            target_owner = get_object_or_404(User, id=target_owner_id)
+            
         document = Document.objects.create(
             user=request.user,
+            target_owner=target_owner,
             document_name=document_name,
             document_file=document_file
         )
         
+        # Handle Request Completion
+        request_id = request.POST.get('request_id')
+        if request_id:
+            try:
+                doc_request = DocumentRequest.objects.get(id=request_id, client=request.user)
+                doc_request.status = 'completed'
+                doc_request.document = document
+                doc_request.save()
+                
+                # Ensure target_owner is set if it wasn't in POST
+                if not document.target_owner:
+                    document.target_owner = doc_request.owner
+                    document.save()
+            except DocumentRequest.DoesNotExist:
+                pass
+                
         # Perform OCR if it's an image
         if document.document_type == 'image':
             from .utils import perform_ocr
             try:
-                # We need the full path. save() might not have written to disk yet if using some storages,
-                # but with default FileSystemStorage it should be there.
                 full_path = document.document_file.path
                 extracted = perform_ocr(full_path)
                 if extracted:
                     document.extracted_text = extracted
                     document.save()
             except Exception as e:
-                # Log error but don't fail the upload
                 print(f"OCR failed for document {document.id}: {e}")
         
         messages.success(request, f'Document "{document_name}" uploaded successfully!')
         return redirect('documents:list')
     
-    return render(request, 'documents/upload.html')
+    # Pre-select owner if responding to a request
+    selected_request = None
+    request_id = request.GET.get('request_id')
+    if request_id:
+        selected_request = get_object_or_404(DocumentRequest, id=request_id, client=request.user)
+    
+    # List of owners linked to this client
+    owners = request.user.profile.owners.all()
+    
+    context = {
+        'selected_request': selected_request,
+        'owners': owners,
+    }
+    return render(request, 'documents/upload.html', context)
 
 
 @login_required
@@ -147,20 +180,23 @@ def delete_document(request, document_id):
     """Delete document"""
     document = get_object_or_404(Document, id=document_id)
     
-    # Check if user has permission (owner or admin)
-    if document.user != request.user and not (hasattr(request.user, 'profile') and request.user.profile.is_admin):
+    # Check if user has permission (uploader, target owner, or superadmin)
+    is_uploader = document.user == request.user
+    is_target_owner = document.target_owner == request.user
+    is_superadmin = request.user.is_superuser
+    
+    if not (is_uploader or is_target_owner or is_superadmin):
         messages.error(request, 'You do not have permission to delete this document.')
         return redirect('documents:list')
     
     if request.method == 'POST':
         document_name = document.document_name
-        # Delete file from filesystem
         if document.document_file and os.path.exists(document.document_file.path):
             os.remove(document.document_file.path)
         document.delete()
         messages.success(request, f'Document "{document_name}" deleted successfully!')
         
-        if hasattr(request.user, 'profile') and request.user.profile.is_admin:
+        if is_target_owner:
             return redirect('accounts:admin_dashboard')
         else:
             return redirect('documents:list')
@@ -175,8 +211,8 @@ def admin_document_list(request):
     query = request.GET.get('q', '')
     documents = Document.objects.select_related('user').order_by('-uploaded_at')
     
-    # Filter by managed_by (Admin/Owner isolation)
-    documents = documents.filter(user__profile__managed_by=request.user)
+    # Filter by target_owner (Admin/Owner isolation)
+    documents = documents.filter(target_owner=request.user)
 
     if query:
         documents = documents.filter(document_name__icontains=query)
@@ -191,3 +227,37 @@ def admin_document_list(request):
         'query': query,
     }
     return render(request, 'admin/document_list.html', context)
+
+
+@login_required
+@user_passes_test(is_admin)
+def create_request(request, user_id):
+    """Admin view: Request a document from a client"""
+    client = get_object_or_404(User, id=user_id)
+    
+    # Check if user is linked to this owner
+    if request.user not in client.profile.owners.all():
+        messages.error(request, "This user is not your client.")
+        return redirect('accounts:user_list')
+        
+    if request.method == 'POST':
+        title = request.POST.get('title')
+        description = request.POST.get('description')
+        
+        DocumentRequest.objects.create(
+            owner=request.user,
+            client=client,
+            title=title,
+            description=description
+        )
+        messages.success(request, f'Document request sent to {client.email}')
+        return redirect('accounts:user_detail', user_id=user_id)
+        
+    return render(request, 'admin/create_request.html', {'client': client})
+
+
+@login_required
+def my_requests(request):
+    """Client view: List all document requests"""
+    requests_list = DocumentRequest.objects.filter(client=request.user).order_by('-created_at')
+    return render(request, 'documents/req_list_v2.html', {'requests': requests_list})

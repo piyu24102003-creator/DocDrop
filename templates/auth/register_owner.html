@@ -21,6 +21,12 @@
                     </div>
 
                     <div class="mb-3">
+                        <label for="firm_name" class="form-label">Firm / Company Name</label>
+                        <input type="text" class="form-control" id="firm_name" name="firm_name" required
+                            placeholder="e.g. Sahdev & Co. Auditors">
+                    </div>
+
+                    <div class="mb-3">
                         <label for="email" class="form-label">Email Address (will be username)</label>
                         <input type="email" class="form-control" id="email" name="email" required>
                     </div>
@@ -42,9 +48,27 @@
                         </select>
                     </div>
 
-                    <div class="mb-4">
+                    <div class="mb-3">
                         <label for="password" class="form-label">Password</label>
-                        <input type="password" class="form-control" id="password" name="password" required>
+                        <div class="input-group">
+                            <input type="password" class="form-control" id="password" name="password" required
+                                minlength="8">
+                            <button class="btn btn-outline-secondary" type="button" id="togglePassword">
+                                <i class="bi bi-eye" id="toggleIcon"></i>
+                            </button>
+                        </div>
+                        <small class="text-muted">Minimum 8 characters</small>
+                    </div>
+
+                    <div class="mb-4">
+                        <label for="password_confirm" class="form-label">Confirm Password</label>
+                        <div class="input-group">
+                            <input type="password" class="form-control" id="password_confirm" name="password_confirm"
+                                required minlength="8">
+                            <button class="btn btn-outline-secondary" type="button" id="togglePasswordConfirm">
+                                <i class="bi bi-eye" id="toggleIconConfirm"></i>
+                            </button>
+                        </div>
                     </div>
 
                     <button type="submit" class="btn btn-primary w-100 mb-3">
@@ -61,4 +85,35 @@
         </div>
     </div>
 </div>
+
+<script>
+    // Password visibility toggle
+    document.getElementById('togglePassword').addEventListener('click', function () {
+        const password = document.getElementById('password');
+        const icon = document.getElementById('toggleIcon');
+        if (password.type === 'password') {
+            password.type = 'text';
+            icon.classList.remove('bi-eye');
+            icon.classList.add('bi-eye-slash');
+        } else {
+            password.type = 'password';
+            icon.classList.remove('bi-eye-slash');
+            icon.classList.add('bi-eye');
+        }
+    });
+
+    document.getElementById('togglePasswordConfirm').addEventListener('click', function () {
+        const password = document.getElementById('password_confirm');
+        const icon = document.getElementById('toggleIconConfirm');
+        if (password.type === 'password') {
+            password.type = 'text';
+            icon.classList.remove('bi-eye');
+            icon.classList.add('bi-eye-slash');
+        } else {
+            password.type = 'password';
+            icon.classList.remove('bi-eye-slash');
+            icon.classList.add('bi-eye');
+        }
+    });
+</script>
 {% endblock %}

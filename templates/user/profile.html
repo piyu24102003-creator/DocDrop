@@ -20,35 +20,51 @@
                         </div>
                         <div class="col-md-6 mb-3">
                             <label for="email" class="form-label">Email *</label>
-                            <input type="email" class="form-control" id="email" name="email" value="{{ user.email }}" required>
+                            <input type="email" class="form-control" id="email" name="email" value="{{ user.email }}"
+                                required>
                         </div>
                     </div>
-                    
+
                     <div class="row">
                         <div class="col-md-6 mb-3">
                             <label for="first_name" class="form-label">First Name</label>
-                            <input type="text" class="form-control" id="first_name" name="first_name" value="{{ user.first_name }}">
+                            <input type="text" class="form-control" id="first_name" name="first_name"
+                                value="{{ user.first_name }}">
                         </div>
                         <div class="col-md-6 mb-3">
                             <label for="last_name" class="form-label">Last Name</label>
-                            <input type="text" class="form-control" id="last_name" name="last_name" value="{{ user.last_name }}">
+                            <input type="text" class="form-control" id="last_name" name="last_name"
+                                value="{{ user.last_name }}">
                         </div>
                     </div>
-                    
+
                     <div class="mb-3">
                         <label for="phone" class="form-label">Phone</label>
-                        <input type="text" class="form-control" id="phone" name="phone" value="{{ user.profile.phone }}">
+                        <input type="text" class="form-control" id="phone" name="phone"
+                            value="{{ user.profile.phone }}">
                     </div>
-                    
+
+                    {% if user.profile.is_admin %}
+                    <div class="mb-3">
+                        <label for="firm_name" class="form-label">Firm / Company Name</label>
+                        <input type="text" class="form-control" id="firm_name" name="firm_name"
+                            value="{{ user.profile.firm_name|default:'' }}">
+                    </div>
+                    {% endif %}
+
                     <div class="mb-3">
                         <label class="form-label">Role</label>
-                        <input type="text" class="form-control" value="{% if user.profile.is_admin %}Admin{% else %}User{% endif %}" disabled>
+                        <input type="text" class="form-control"
+                            value="{% if user.profile.is_admin %}Admin{% else %}User{% endif %}" disabled>
                     </div>
-                    
+
                     <div class="d-grid gap-2">
                         <button type="submit" class="btn btn-primary">
                             <i class="bi bi-check-circle"></i> Update Profile
                         </button>
+                        <a href="{% url 'accounts:password_reset_request' %}" class="btn btn-warning">
+                            <i class="bi bi-key"></i> Change Password
+                        </a>
                         <a href="{% url 'accounts:dashboard' %}" class="btn btn-secondary">
                             <i class="bi bi-arrow-left"></i> Back to Dashboard
                         </a>
@@ -59,4 +75,3 @@
     </div>
 </div>
 {% endblock %}
-

@@ -33,5 +33,13 @@ urlpatterns = [
     path('password-reset/done/', auth_views.PasswordResetDoneView.as_view(template_name='auth/password_reset_done.html'), name='password_reset_done'),
     path('password-reset-confirm/<uidb64>/<token>/', views.CustomPasswordResetConfirmView.as_view(), name='password_reset_confirm'),
     path('password-reset-complete/', auth_views.PasswordResetCompleteView.as_view(template_name='auth/password_reset_complete.html'), name='password_reset_complete'),
+    
+    # Password Reset with OTP
+    path('password-reset/request/', views.password_reset_request, name='password_reset_request'),
+    path('password-reset/verify/', views.password_reset_verify_otp, name='password_reset_verify'),
+    
+    # About & Contact
+    path('about/', views.about, name='about'),
+    path('contact/', views.contact, name='contact'),
 ]
 

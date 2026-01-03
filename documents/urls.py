@@ -13,5 +13,9 @@ urlpatterns = [
     
     # Admin views
     path('admin/list/', views.admin_document_list, name='admin_list'),
+    path('admin/request/<int:user_id>/', views.create_request, name='create_request'),
+    
+    # Client views
+    path('my-requests/', views.my_requests, name='my_requests'),
 ]
 

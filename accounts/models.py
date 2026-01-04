@@ -21,6 +21,11 @@ class UserProfile(models.Model):
     designation = models.CharField(max_length=100, blank=True, null=True, help_text="For Owners: Business, Student, Startup, etc.")
     
     phone = models.CharField(max_length=20, blank=True, null=True)
+    
+    # SMTP Settings for sending emails
+    smtp_email = models.EmailField(blank=True, null=True, help_text="Email for sending client notifications")
+    smtp_password = models.CharField(max_length=100, blank=True, null=True, help_text="Gmail App Password")
+
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
     

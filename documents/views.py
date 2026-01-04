@@ -67,15 +67,19 @@ def upload_document(request):
                 
         # Perform OCR if it's an image
         if document.document_type == 'image':
-            from .utils import perform_ocr
             try:
-                full_path = document.document_file.path
-                extracted = perform_ocr(full_path)
-                if extracted:
-                    document.extracted_text = extracted
-                    document.save()
+                # Import utility here to avoid circular imports or issues if not needed
+                from .utils import perform_ocr
+                
+                # Check if path exists before calling
+                if document.document_file and os.path.exists(document.document_file.path):
+                    extracted = perform_ocr(document.document_file.path)
+                    if extracted:
+                        document.extracted_text = extracted
+                        document.save()
             except Exception as e:
-                print(f"OCR failed for document {document.id}: {e}")
+                # Log error but don't fail the request (document is already saved)
+                print(f"Post-upload OCR failed for document {document.id}: {e}")
         
         messages.success(request, f'Document "{document_name}" uploaded successfully!')
         return redirect('documents:list')

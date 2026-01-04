@@ -50,23 +50,6 @@
                         <input type="text" class="form-control" id="firm_name" name="firm_name"
                             value="{{ user.profile.firm_name|default:'' }}">
                     </div>
-
-                    <hr>
-                    <h5 class="mb-3">Email Notification Settings (SMTP)</h5>
-                    <div class="row">
-                        <div class="col-md-6 mb-3">
-                            <label for="smtp_email" class="form-label">Gmail Address</label>
-                            <input type="email" class="form-control" id="smtp_email" name="smtp_email"
-                                value="{{ user.profile.smtp_email|default:'' }}" placeholder="your-email@gmail.com">
-                            <small class="text-muted">Used to send welcome emails to your clients.</small>
-                        </div>
-                        <div class="col-md-6 mb-3">
-                            <label for="smtp_password" class="form-label">Gmail App Password</label>
-                            <input type="password" class="form-control" id="smtp_password" name="smtp_password"
-                                value="{{ user.profile.smtp_password|default:'' }}" placeholder="16-character code">
-                            <small class="text-muted">Generate this in your Google Account Security settings.</small>
-                        </div>
-                    </div>
                     {% endif %}
 
                     <div class="mb-3">

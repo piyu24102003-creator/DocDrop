@@ -353,8 +353,6 @@ def profile(request):
         user.profile.phone = request.POST.get('phone', '')
         if user.profile.is_admin:
             user.profile.firm_name = request.POST.get('firm_name', '')
-            user.profile.smtp_email = request.POST.get('smtp_email', '')
-            user.profile.smtp_password = request.POST.get('smtp_password', '')
         user.save()
         user.profile.save()
         messages.success(request, 'Profile updated successfully!')

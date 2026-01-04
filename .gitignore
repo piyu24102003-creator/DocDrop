@@ -1,13 +1,12 @@
 # Python
+__pycache__/
 *.py[cod]
 *$py.class
 *.so
 .Python
-__pycache__/
-*.pyc
-*.pyo
-*.pyd
-.Python
+env/
+venv/
+ENV/
 build/
 develop-eggs/
 dist/
@@ -24,26 +23,13 @@ wheels/
 .installed.cfg
 *.egg
 
-# Virtual Environment
-venv/
-ENV/
-env/
-.venv
-
 # Django
 *.log
-*.pot
-*.pyc
+local_settings.py
 db.sqlite3
 db.sqlite3-journal
 /media
 /staticfiles
-/static_root
-
-# Environment variables
-.env
-.env.local
-.env.*.local
 
 # IDE
 .vscode/
@@ -51,32 +37,16 @@ db.sqlite3-journal
 *.swp
 *.swo
 *~
+
+# OS
 .DS_Store
+Thumbs.db
 
-# Database
-*.sqlite3
-*.db
+# Environment
+.env
+.env.local
 
-# Test coverage
-htmlcov/
-.tox/
-.coverage
-.coverage.*
-.cache
-nosetests.xml
-coverage.xml
-*.cover
-
-# Migrations (optional - uncomment if you want to exclude)
+# Migrations (optional - uncomment if you want to ignore)
 # */migrations/*.py
 # !*/migrations/__init__.py
 
-# OS
-Thumbs.db
-.DS_Store
-
-# Project specific
-admin_list.txt
-error.log
-pip_list.txt
-DocDrop_Old_Files

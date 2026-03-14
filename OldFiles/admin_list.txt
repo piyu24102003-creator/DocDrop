@@ -1,4 +1,0 @@
---- Administrator Accounts ---
-USER: deepbuhecha7@gmail.com | EMAIL: deepbuhecha7@gmail.com | SUPERUSER: False | ROLE: admin
-USER: Developer | EMAIL: piyu24102003@gmail.com | SUPERUSER: True | ROLE: user
-USER: Owner1@gmail.com | EMAIL: Owner1@gmail.com | SUPERUSER: False | ROLE: admin

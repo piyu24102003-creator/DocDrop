@@ -67,8 +67,8 @@ DocDrop/
 │   ├── media/                  # Uploaded documents
 │   ├── manage.py               # Django CLI
 │   └── requirements.txt        # Dependencies
-├── venv/                       # Virtual environment
-└── Documentation files         # This and other guides
+├── docs/                       # Project documentation
+└── venv/                       # Virtual environment
 ```
 
 ---

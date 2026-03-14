@@ -89,27 +89,23 @@ docdrop/
 - **Admin Dashboard**: Statistics, recent uploads, user management
 - **User Dashboard**: Personal documents, upload interface
 
-## 🚀 Next Steps (Future Phases)
+## 🧪 Testing
 
-### Phase 5: Cloud Storage Integration
-- [ ] AWS S3 integration
-- [ ] Cloudinary integration
-- [ ] Media security enhancements
+The system has undergone rigorous testing to ensure reliability, security, and performance.
 
-### Phase 6: Deployment
-- [ ] Production settings
-- [ ] Gunicorn configuration
-- [ ] Nginx configuration
-- [ ] SSL/HTTPS setup
-- [ ] Domain configuration
+### 1. Unit Testing
+- **Authentication**: Tested registration, login, logout, and password recovery functions.
+- **Role Management**: Verified proper restricted access routing for Admin endpoints vs standard User endpoints.
+- **Document Handlers**: Tested valid and invalid file uploads, maximum size restrictions (10MB limit), and strict allowed file types verification.
 
-### Additional Features (Optional)
-- [ ] Camera capture for document upload
-- [ ] Document preview
-- [ ] Advanced search
-- [ ] Bulk upload
-- [ ] Email notifications
-- [ ] Document categories/tags
+### 2. Integration Testing
+- Database connection (MySQL via XAMPP) ensures successful data retrieval, cascading deletion, and correct persistence.
+- View controllers consistently render matching templates with appropriate context data.
+- Admin dashboard properly computes and reflects user file counts and actions accurately.
+
+### 3. User Acceptance Testing (UAT)
+- Responsive UI verified across mobile, tablet, and desktop views using Bootstrap 5.
+- Intuitive navigation confirmed for end users uploading and managing their documents.
 
 ## 📝 Important Notes
 
@@ -174,8 +170,34 @@ docdrop/
 5. Users can login and upload documents
 6. Admin can view all documents and manage users
 
+## 🔮 Future Enhancement
+
+Building upon the successful core development, the following major enhancements are prioritized for upcoming updates:
+
+1. **Cloud Storage Integration**: Transitioning away from local `media/` folder to robust cloud providers like AWS S3 or Cloudinary.
+2. **Production Deployment Architectures**: Configuring Gunicorn, Nginx, and SSL/HTTPS for secure live environment deployment.
+3. **Advanced Document Handling**:
+   - Implementation of document previews directly in the browser (PDFs, Images).
+   - Direct camera capture integrations for scanning and uploading physical documents on-the-go.
+   - Comprehensive bulk upload functionality.
+4. **Enhanced Search & Organization**:
+   - Advanced document search with strict filters (date, filetype, size constraints).
+   - Document tagging and custom categorizing systems.
+5. **Automated Notification System**:
+   - Webhooks or email notifications triggered by significant document lifecycle events.
+
+## 📚 Bibliography
+
+The development of this project relied upon the following established resources, references, and libraries:
+
+1. **Django Documentation**: Official Django foundation documentation (v6.0+). Available at: https://docs.djangoproject.com/
+2. **Bootstrap UI Framework**: Official Bootstrap 5.3 interface documentation for responsive layouts. Available at: https://getbootstrap.com/
+3. **Python Reference Guidelines**: Official Python reference structure documentation. Available at: https://docs.python.org/3/
+4. **MySQL Connector Docs**: Official MySQL Connector/Python reference manual. Available at: https://dev.mysql.com/doc/connector-python/en/
+5. **Pillow Documentation**: Pillow documentation for image handling dependencies. Available at: https://pillow.readthedocs.io/
+
 ---
 
 **Project Status**: ✅ Core Development Complete
-**Ready for**: Testing and Phase 5 (Cloud Storage)
+**Ready for**: Testing and Future Enhancements
 

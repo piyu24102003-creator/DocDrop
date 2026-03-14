@@ -16,7 +16,7 @@
 
 ```bash
 # Activate virtual environment
-venv\Scripts\activate  # Windows
+# Windows
 # or
 source venv/bin/activate  # Linux/Mac
 

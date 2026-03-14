@@ -153,6 +153,7 @@ docdrop/
 │   ├── views.py
 │   ├── urls.py
 │   └── ...
+├── docs/                 # Project documentation
 ├── templates/            # HTML Templates
 │   ├── base/
 │   ├── auth/
